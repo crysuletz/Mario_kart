@@ -42,14 +42,23 @@ class Car:
         return surf
 
     def get_rotated_sprite(self) -> tuple[pygame.Surface, pygame.Rect]:
+
+        """Affiche correctement la voiture lorsqu'elle tourne à gauche ou à droite."""
+        
         rotated = pygame.transform.rotate(self.sprite, -self.angle)
         rect = rotated.get_rect(center=(int(self.x), int(self.y)))
         return rotated, rect
 
     def freinage(self) -> None :
+
+        """ Décélère la voiture """
+        
         self.speed -= CAR_ACCELERATION
         
     def marche_arriere(self) -> None :
+
+        """ Effectue une marche en arrière de la voiture """
+        
         self.y -= self.speed
 
 
