@@ -3,6 +3,9 @@ from controller.game_controller import GameController
 
 
 def main():
+
+    """lance pygame, cree le contrôleur et démarre la boucle du jeu"""
+
     pygame.init()
     pygame.display.set_caption("Projet Python - Jeu de course 2D")
 
