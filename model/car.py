@@ -1,7 +1,7 @@
 import pygame
 import math
 from constants import (
-    CAR_ACCELERATION, CAR_WIDTH, CAR_HEIGHT, TILE_SIZE
+    CAR_ACCELERATION, CAR_ORIENTATION, CAR_WIDTH, CAR_HEIGHT, TILE_SIZE
 )
 
 
@@ -23,13 +23,34 @@ class Car:
         
         """Définition de l'accélération de la voiture"""
 
-        self.speed += CAR_ACCELERATION
+        self.speed += CAR_ACCELERATION #*math.exp(-frottement)
+
+    def freinage(self) -> None :
+
+        """Définition de la décéleration de la voiture"""
+    
+        self.speed -= CAR_ACCELERATION #*math.exp(-frottement)
+
+    def tourner_gauche(self) -> None:
+
+        """ Permet de mettre à jour l'orientation de la voiture à gauche"""
+
+        self.angle -= CAR_ORIENTATION
+
+    def tourner_droite(self) -> None:
+    
+        """ Permet de mettre à jour l'orientation de la voiture à droite"""
+            
+        self.angle += CAR_ORIENTATION
 
     def update_position(self) -> None:
 
         """Definition de la position de la voiture en y"""
 
-        self.y += self.speed
+        angle_rad = math.radians(self.angle)
+
+        self.x += self.speed * math.sin(angle_rad)
+        self.y += self.speed * math.cos(angle_rad)
 
     def build_sprite(self) -> pygame.Surface:
 
@@ -37,8 +58,9 @@ class Car:
         lorsque la voiture se déplace"""
 
         surf = pygame.Surface((CAR_WIDTH, CAR_HEIGHT), pygame.SRCALPHA)
-        pygame.draw.rect(surf, (255, 0, 0), (0, 0, CAR_WIDTH,
-                         CAR_HEIGHT), border_radius=5)
+        pygame.draw.rect(surf, (255, 255, 0), (0, 0, CAR_WIDTH,
+                         CAR_HEIGHT), border_radius=5, border_top_left_radius=20, border_top_right_radius = 20)
+
         return surf
 
     def get_rotated_sprite(self) -> tuple[pygame.Surface, pygame.Rect]:
@@ -49,16 +71,5 @@ class Car:
         rect = rotated.get_rect(center=(int(self.x), int(self.y)))
         return rotated, rect
 
-    def freinage(self) -> None :
-
-        """ Décélère la voiture """
-        
-        self.speed -= CAR_ACCELERATION
-        
-    def marche_arriere(self) -> None :
-
-        """ Effectue une marche en arrière de la voiture """
-        
-        self.y -= self.speed
 
 
