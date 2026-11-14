@@ -28,7 +28,7 @@ class GameModel:
         
         """ Initialisation de la position de la voiture au début de la course"""
         
-        self.car = Car(7, 1)
+        self.car = Car(0, 11)
 
     def update(self) -> None:
 
