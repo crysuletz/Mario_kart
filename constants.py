@@ -26,8 +26,9 @@ FROTTEMENT_NEIGE = 0.2
 
 
 class GameState:
-     """les états possibles du jeu"""
+    """les états possibles du jeu"""
     MENU = "menu"
+    CIRCUIT_SELECTION = "circuit_selection"
     RACING = "racing"
 
 
