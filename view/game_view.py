@@ -8,8 +8,7 @@ from model.game_model import GameModel
 
 
 class GameView:
-
-        """gère l'affichage du jeu (menu et course)"""
+    """gère l'affichage du jeu: le menu, le choix du circuit et la course"""
 
     def __init__(self, screen: pygame.Surface):
         """garde l'écran et choisit la police pour écrire le texte"""
@@ -21,12 +20,38 @@ class GameView:
         self.screen.fill(COLOR_BG)
         if model.state == GameState.MENU:
             self._draw_menu(model)
+        elif model.state == GameState.CIRCUIT_SELECTION:
+            self._draw_selection(model)
         elif model.state == GameState.RACING:
             self._draw_racing(model)
         pygame.display.flip()
+    
+    def _draw_selection(self, model: GameModel) -> None:
+        """dessine la liste des circuits avec celui qui est choisi en jaune"""
+        cx = WINDOW_WIDTH // 2
+
+        # titre en haut de l'écran
+        title = self.font.render("Choisir un circuit", True, COLOR_ACCENT)
+        self.screen.blit(title, title.get_rect(center=(cx, 160)))
+
+        # un bouton par circuit
+        for i in range(len(model.circuit_names)):
+            y = 320 + i * 80
+            rect = pygame.Rect(cx - 140, y - 25, 280, 50)
+
+            # le circuit choisi en jaune, les autres en blanc
+            if i == model.selected_circuit:
+                color = COLOR_ACCENT
+            else:
+                color = COLOR_TEXT
+
+            pygame.draw.rect(self.screen, COLOR_PANEL, rect, border_radius=8)
+            pygame.draw.rect(self.screen, color, rect, 2, border_radius=8)
+            text = self.font.render(model.circuit_names[i], True, color)
+            self.screen.blit(text, text.get_rect(center=rect.center))
 
     def _draw_menu(self, model: GameModel) -> None:
-         """dessine le menu avec le titre et les boutons jouer et quitter"""
+        """dessine le menu avec le titre et les boutons jouer et quitter"""
         cx = WINDOW_WIDTH // 2
 
         title_surf = self.font.render(
