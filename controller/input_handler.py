@@ -25,7 +25,7 @@ class InputHandler:
     def __init__(self):
         """Prépare le dictionnaire qui associe les touches du clavier aux actions"""
         self.mapping1 = MAPPING_PLAYER1
-        self.mapping2 = MAPPING_PLAYER1
+        self.mapping2 = MAPPING_PLAYER2
 
     def get_inputs(self) -> dict:
         """Vérifie les touches maintenues et renvoie les actions correspondantes
@@ -36,6 +36,8 @@ class InputHandler:
         for key, action in self.mapping1.items():
             if keys[key]:
                 p[action] = True
+
+        return p
 
 
     def get_inputs2(self) -> dict:
