@@ -16,7 +16,7 @@ class GameModel:
         self.car: Car | None = None
         self.car2: Car | None = None
         # noms des circuits et numéro du circuit choisi
-        self.circuit_names = ["circuit 1", "circuit 2"] 
+        self.circuit_names = ["Facile", "Moyen", "Difficile"]
         self.selected_circuit = 0
     
     def change_circuit(self, direction: int) -> None:
@@ -33,9 +33,11 @@ class GameModel:
         
         """ Met à jour le circuit et fais apparaître les voitures """
 
-        # le circuit 2 a moins de colonnes que le circuit 1
+        # circuits provisoires de largeurs différentes
         if self.selected_circuit == 0:
             cols = GRID_COLS
+        elif self.selected_circuit == 1:
+            cols = GRID_COLS - 3
         else:
             cols = GRID_COLS - 6
         
