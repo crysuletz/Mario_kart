@@ -58,8 +58,8 @@ class GameView:
             "Jeu de course 2D", True, COLOR_ACCENT)
         self.screen.blit(title_surf, title_surf.get_rect(center=(cx, 160)))
 
-        options = [("JOUER (Enter)", GameState.RACING),
-                   ("QUITTER (Escape)", None)]
+        options = [("JOUER (Entrée)", GameState.RACING),
+                   ("QUITTER (Échap)", None)]
         for i, (label, _) in enumerate(options):
             y = 320 + i * 80
             rect = pygame.Rect(cx - 140, y - 25, 280, 50)
