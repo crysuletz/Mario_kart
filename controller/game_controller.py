@@ -86,12 +86,11 @@ class GameController:
 
     def apply_input(self, car, player_input) -> None:
         """Applique les commandes du joueur à la voiture (accélération, freinage et direction) selon les touches maintenues"""
-         if player_input['accelerate']:
+        if player_input['accelerate']:
             car.accelerate()
         elif player_input['freinage']:
             car.freinage()
-            
-        if player_input['tourner_gauche']:
+        elif player_input['tourner_gauche']:
             car.tourner_gauche()
         elif player_input['tourner_droite']:
             car.tourner_droite()
