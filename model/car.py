@@ -58,16 +58,16 @@ class Car:
         """Construit les éléments qui apparaissent à l'écran, 
         lorsque la voiture du joueur 1 se déplace"""
 
-        surf = pygame.Surface((CAR_WIDTH, CAR_HEIGHT), pygame.SRCALPHA)
-        pygame.draw.rect(surf, (255, 105, 180), (0, 0, CAR_WIDTH,
-                         CAR_HEIGHT), border_radius=5, border_top_left_radius=15, border_top_right_radius = 15)
-        pygame.draw.rect(surf, (205, 55, 125), (0, 0, CAR_WIDTH,
-                                         CAR_HEIGHT/3), border_radius=5, border_top_left_radius=5, border_top_right_radius = 5, 
-                                         border_bottom_left_radius=5, border_bottom_right_radius = 5)
+        surf = pygame.Surface((CAR_WIDTH, CAR_HEIGHT), pygame.SRCALPHA) # representation de la voiture par un rectangle
+        pygame.draw.rect(surf, (181, 13, 74), (0, 0, CAR_WIDTH,
+                         CAR_HEIGHT), border_radius=5)  # couleur et forme de la voiture
+        pygame.draw.rect(surf, (231, 63, 124), (4, 4, CAR_WIDTH/1.35,
+                                         CAR_HEIGHT/3.5), border_radius=3, border_top_left_radius=3, border_top_right_radius = 3, 
+                                         border_bottom_left_radius=3, border_bottom_right_radius = 3)  # representation de la fenetre avant pour distinguer lavant de larrière
         pygame.draw.rect(surf, (0, 0, 0), (-2, 5, CAR_WIDTH/7,CAR_HEIGHT/4) )
         pygame.draw.rect(surf, (0, 0, 0), (-2, 35, CAR_WIDTH/7,CAR_HEIGHT/4) )
         pygame.draw.rect(surf, (0, 0, 0), (28, 5, CAR_WIDTH/5,CAR_HEIGHT/4) )
-        pygame.draw.rect(surf, (0, 0, 0), (28, 35, CAR_WIDTH/5,CAR_HEIGHT/4) )
+        pygame.draw.rect(surf, (0, 0, 0), (28, 35, CAR_WIDTH/5,CAR_HEIGHT/4) ) # representaion des roues de la voiture
         
         return surf
         
@@ -77,11 +77,11 @@ class Car:
         lorsque la voiture du joueur 2 se déplace"""
     
         surf2 = pygame.Surface((CAR_WIDTH, CAR_HEIGHT), pygame.SRCALPHA)
-        pygame.draw.rect(surf2, (0, 0, 255), (0, 0, CAR_WIDTH,
-                         CAR_HEIGHT), border_radius=5, border_top_left_radius=5, border_top_right_radius = 5)
-        pygame.draw.rect(surf2, (0, 0, 205), (0, 0, CAR_WIDTH,
-                                 CAR_HEIGHT/3), border_radius=5, border_top_left_radius=5, border_top_right_radius = 5, 
-                                 border_bottom_left_radius=5, border_bottom_right_radius = 5)
+        pygame.draw.rect(surf2, (7, 2, 250), (0, 0, CAR_WIDTH,
+                         CAR_HEIGHT), border_radius=5)
+        pygame.draw.rect(surf2, (57, 52, 255), (4, 4, CAR_WIDTH/1.35,
+                                         CAR_HEIGHT/3.5), border_radius=3, border_top_left_radius=3, border_top_right_radius = 3, 
+                                         border_bottom_left_radius=3, border_bottom_right_radius = 3)
 
         pygame.draw.rect(surf2, (0, 0, 0), (-2, 5, CAR_WIDTH/7,CAR_HEIGHT/4) )
         pygame.draw.rect(surf2, (0, 0, 0), (-2, 35, CAR_WIDTH/7,CAR_HEIGHT/4) )
