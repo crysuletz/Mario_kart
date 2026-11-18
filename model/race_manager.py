@@ -11,3 +11,11 @@ class RaceManager:
         self.passed_checkpoints = {1: [], 2: []}
         # personne n'a gagné au début
         self.winner = None
+
+    def pass_checkpoint(self, player: int, col: int, row: int) -> None:
+        """retient qu'un joueur est passé sur un checkpoint"""
+        position = (col, row)
+        # on l'ajoute si le joueur est pas déjà passé dessus
+        if position not in self.passed_checkpoints[player]:
+            self.passed_checkpoints[player].append(position)
+    
