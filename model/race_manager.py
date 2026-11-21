@@ -19,3 +19,13 @@ class RaceManager:
         if position not in self.passed_checkpoints[player]:
             self.passed_checkpoints[player].append(position)
     
+    def pass_finish_line(self, player: int) -> None:
+        """ajoute un tour si tous les checkpoints sont passés et vérifie si le joueur a gagné"""
+        # on compte le tour si le joueur a passe tous les checkpoints
+        if len(self.passed_checkpoints[player]) == self.total_checkpoints:
+            self.laps[player] = self.laps[player] + 1
+            # on vide la liste pour recommencer au tour suivant
+            self.passed_checkpoints[player] = []
+            # le premier qui fait tous les tours gagne
+            if self.laps[player] == self.total_laps and self.winner is None:
+                self.winner = player
