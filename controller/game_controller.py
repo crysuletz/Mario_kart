@@ -38,7 +38,7 @@ class GameController:
                 self.handle_keydown(event.key)
 
     def handle_keydown(self, key: int) -> None:
-        """Vérifie l'état du jeu (menu, choix du circuit ou course) pour savoir quoi faire avec la touche appuyée"""
+        """Vérifie l'état du jeu (menu, choix du circuit, course ou victoire) pour savoir quoi faire avec la touche appuyée"""
         state = self.model.state
 
         if state == GameState.MENU:
@@ -48,6 +48,8 @@ class GameController:
         elif state == GameState.RACING:
             if key == pygame.K_ESCAPE:
                 self.model.state = GameState.MENU
+        elif state == GameState.VICTORY:
+            self.handle_victory_key(key)
 
     def handle_menu_key(self, key: int) -> None:
         """Permet d'aller au choix des circuits avec Entrée ou de quitter le jeu avec Échap"""
@@ -66,6 +68,11 @@ class GameController:
             self.model.load_circuit()
             self.model.state = GameState.RACING
         elif key == pygame.K_ESCAPE:
+            self.model.state = GameState.MENU
+
+    def handle_victory_key(self, key: int) -> None:
+        """revient au menu avec Entrée ou Echap"""
+        if key == pygame.K_RETURN or key == pygame.K_ESCAPE:
             self.model.state = GameState.MENU
             
     def update(self) -> None:

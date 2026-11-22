@@ -16,7 +16,7 @@ class GameView:
         self.font = pygame.font.SysFont("Arial", 24)
 
     def draw(self, model: GameModel) -> None:
-        """efface l'écran puis dessine le menu ou la course selon l'état du jeu"""
+        """efface l'écran puis le redessine selon l'état du jeu"""
         self.screen.fill(COLOR_BG)
         if model.state == GameState.MENU:
             self._draw_menu(model)
@@ -24,6 +24,8 @@ class GameView:
             self._draw_selection(model)
         elif model.state == GameState.RACING:
             self._draw_racing(model)
+        elif model.state == GameState.VICTORY:
+            self._draw_victory(model)
         pygame.display.flip()
     
     def _draw_selection(self, model: GameModel) -> None:
@@ -49,6 +51,15 @@ class GameView:
             pygame.draw.rect(self.screen, color, rect, 2, border_radius=8)
             text = self.font.render(model.circuit_names[i], True, color)
             self.screen.blit(text, text.get_rect(center=rect.center))
+    
+    def _draw_victory(self, model: GameModel) -> None:
+        """affiche le joueur qui a gagné"""
+        cx = WINDOW_WIDTH // 2
+        text = self.font.render("Joueur " + str(model.race.winner) + " a gagné !", True, COLOR_ACCENT)
+        self.screen.blit(text, text.get_rect(center=(cx, 300)))
+        # aide en dessous pour le joueur
+        aide = self.font.render("Entrée ou Échap : retour au menu", True, COLOR_TEXT)
+        self.screen.blit(aide, aide.get_rect(center=(cx, 450)))
 
     def _draw_menu(self, model: GameModel) -> None:
         """dessine le menu avec le titre et les boutons jouer et quitter"""

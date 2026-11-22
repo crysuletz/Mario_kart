@@ -30,6 +30,7 @@ class GameState:
     MENU = "menu"
     CIRCUIT_SELECTION = "circuit_selection"
     RACING = "racing"
+    VICTORY = "victory"
 
 
 # --- Couleurs UI ---

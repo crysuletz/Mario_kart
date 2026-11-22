@@ -2,6 +2,7 @@ from constants import GameState, GRID_ROWS, GRID_COLS
 from model.car import Car
 from model.circuit import Circuit
 from model.road_tile import RoadTile
+from model.race_manager import RaceManager
 
 
 class GameModel:
@@ -15,6 +16,7 @@ class GameModel:
         self.circuit: Circuit | None = None
         self.car: Car | None = None
         self.car2: Car | None = None
+        self.race: RaceManager | None = None
         # noms des circuits et numéro du circuit choisi
         self.circuit_names = ["Facile", "Moyen", "Difficile"]
         self.selected_circuit = 0
@@ -45,6 +47,8 @@ class GameModel:
                  for col_idx in range(cols)]
                 for row_idx in range(GRID_ROWS)]
         self.circuit = Circuit(grid=grid)
+        # 4 checkpoints et 3 tours pour l'instant va falloir adapter apres pour chaque circuit
+        self.race = RaceManager(4, 3)
         self.spawn_car()
 
     def spawn_car(self) -> None:
@@ -62,3 +66,6 @@ class GameModel:
             return
         self.car.update_position()
         self.car2.update_position()
+        # si un joueur a gagne on passe à l'écran de victoire
+        if self.race.winner is not None:
+            self.state = GameState.VICTORY
