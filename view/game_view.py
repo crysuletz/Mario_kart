@@ -8,7 +8,7 @@ from model.game_model import GameModel
 
 
 class GameView:
-    """gère l'affichage du jeu: le menu, le choix du circuit et la course"""
+    """gère l'affichage du jeu : le menu, le choix du circuit, la course et la victoire"""
 
     def __init__(self, screen: pygame.Surface):
         """garde l'écran et choisit la police pour écrire le texte"""
@@ -60,6 +60,28 @@ class GameView:
         # aide en dessous pour le joueur
         aide = self.font.render("Entrée ou Échap : retour au menu", True, COLOR_TEXT)
         self.screen.blit(aide, aide.get_rect(center=(cx, 450)))
+    
+    def _draw_laps(self, model: GameModel) -> None:
+        """affiche les tours et checkpoints du joueur 1 à gauche et du joueur 2 à droite"""
+        race = model.race
+        # bande noire en haut pour bien voir le texte
+        pygame.draw.rect(self.screen, COLOR_PANEL, (0, 0, WINDOW_WIDTH, 40))
+
+        # joueur 1 en rose à gauche
+        tours1 = str(race.laps[1]) + "/" + str(race.total_laps)
+        cp1 = str(len(race.passed_checkpoints[1])) + "/" + str(race.total_checkpoints)
+        texte1 = "Joueur 1 : tour " + tours1 + "   checkpoints " + cp1
+        ligne1 = self.font.render(texte1, True, (255, 105, 180))
+        # on part du bord gauche
+        self.screen.blit(ligne1, (10, 8))
+
+        # joueur 2 en bleu à droite
+        tours2 = str(race.laps[2]) + "/" + str(race.total_laps)
+        cp2 = str(len(race.passed_checkpoints[2])) + "/" + str(race.total_checkpoints)
+        texte2 = "Joueur 2 : tour " + tours2 + "   checkpoints " + cp2
+        ligne2 = self.font.render(texte2, True, (100, 150, 255))
+        # on enlève la largeur du texte pour qu'il finisse au bord droit
+        self.screen.blit(ligne2, (WINDOW_WIDTH - ligne2.get_width() - 10, 8))
 
     def _draw_menu(self, model: GameModel) -> None:
         """dessine le menu avec le titre et les boutons jouer et quitter"""
@@ -96,3 +118,6 @@ class GameView:
         surf2, rect2 = model.car2.get_rotated_sprite2()
         self.screen.blit(surf, rect)
         self.screen.blit(surf2, rect2)
+        self.screen.blit(surf, rect)
+        self.screen.blit(surf2, rect2)
+        self._draw_laps(model)
