@@ -18,9 +18,9 @@ class GameModel:
         self.car2: Car | None = None
         self.race: RaceManager | None = None
         # noms des circuits et numéro du circuit choisi
-        self.circuit_names = ["Facile", "Moyen", "Difficile"]
+        self.circuit_names = ["Campagne", "Canyon", "Glace"]
         self.selected_circuit = 0
-    
+            
     def change_circuit(self, direction: int) -> None:
         """passe au circuit suivant ou précédent"""
         self.selected_circuit = self.selected_circuit + direction
@@ -34,19 +34,10 @@ class GameModel:
     def load_circuit(self) -> None:
         
         """ Met à jour le circuit et fais apparaître les voitures """
-
-        # circuits provisoires de largeurs différentes
-        if self.selected_circuit == 0:
-            cols = GRID_COLS
-        elif self.selected_circuit == 1:
-            cols = GRID_COLS - 3
-        else:
-            cols = GRID_COLS - 6
+        """Charge le circuit choisi parmi Campagne, Canyon et Glace"""
+        nom = self.circuit_names[self.selected_circuit]
+        self.circuit = Circuit.creer(nom)
         
-        grid = [[RoadTile(col=col_idx, row=row_idx)
-                 for col_idx in range(cols)]
-                for row_idx in range(GRID_ROWS)]
-        self.circuit = Circuit(grid=grid)
         # 4 checkpoints et 3 tours pour l'instant va falloir adapter apres pour chaque circuit
         self.race = RaceManager(4, 3)
         self.spawn_car()
@@ -55,8 +46,8 @@ class GameModel:
         
         """ Initialisation de la position des voitures au début de la course"""
         
-        self.car = Car(0, 11)
-        self.car2 = Car(1, 11)
+        self.car = Car(4, 10)
+        self.car2 = Car(3, 10)
 
     def update(self) -> None:
 
