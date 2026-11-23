@@ -23,3 +23,10 @@ class Checkpoint(Block):
         """crée un checkpoint affiché en bleu clair"""
         # on appelle le constructeur de Block avec le nom et la couleur du checkpoint
         super().__init__("checkpoint", (0, 200, 255))
+
+class FinishLine(Block):
+    """ligne d'arrivée"""
+
+    def __init__(self):
+        """crée la ligne d'arrivée en blanc"""
+        super().__init__("finish", (255, 255, 255))
