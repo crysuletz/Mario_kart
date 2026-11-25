@@ -1,7 +1,7 @@
 from model.road_tile import RoadTile
 from constants import TILE_SIZE
 
-"""Chaque lettre correspond à un type de terrain dans la grille"""
+# chaque lettre correspond à un type de terrain dans la grille
 TERRAINS = {
     "R": "road",
     "G": "grass",
@@ -11,7 +11,7 @@ TERRAINS = {
 }
 
 
-"""Grilles des trois circuits, chaque lettre représente une case"""
+# grilles des trois circuits, chaque lettre représente une case
 CARTES = {
     "Campagne": (
         "GGGGGGGGGGGGGGGG",
@@ -59,40 +59,64 @@ CARTES = {
     ),
 }
 
-
-"""Positions des quatre checkpoints de chaque circuit"""
+# positions des quatre checkpoints de chaque circuit
 CHECKPOINTS = {
     "Campagne": [(10, 10), (13, 6), (7, 1), (1, 6)],
     "Canyon": [(10, 10), (13, 6), (3, 1), (1, 6)],
     "Glace": [(10, 10), (13, 9), (9, 1), (1, 8)],
 }
 
-"""Positions des boosts sur chaque circuit"""
+# positions des boosts sur chaque circuit
 BOOSTS = {
     "Campagne": [(9, 1), (5, 10)],
     "Canyon": [(12, 9), (7, 4)],
     "Glace": [(12, 10), (10, 5)],
 }
 
+# les cases de chaque checkpoint dans l'ordre du circuit
+CHECKPOINT_BANDS = {
+    "Campagne": [[(10, 9), (10, 10)], [(13, 6), (14, 6)], [(7, 1), (7, 2)], [(1, 6), (2, 6)]],
+    "Canyon": [[(10, 9), (10, 10)], [(13, 6), (14, 6)], [(3, 1), (3, 2)], [(1, 6), (2, 6)]],
+    "Glace": [[(10, 10), (10, 11)], [(13, 9), (14, 9)], [(9, 1), (9, 2)], [(1, 8), (2, 8)]],
+}
+
+# les cases de la ligne d'arrivée
+FINISH_BANDS = {
+    "Campagne": [(8, 9), (8, 10)],
+    "Canyon": [(8, 9), (8, 10)],
+    "Glace": [(8, 10), (8, 11)],
+}
+
+# sens dans lequel on doit traverser chaque checkpoint
+CHECKPOINT_DIRECTIONS = ["right", "up", "left", "down"]
+
+# sens dans lequel on doit traverser la ligne d'arrivée
+FINISH_DIRECTION = "right"
+
+
 class Circuit:
     """Représente un circuit composé de plusieurs cases organisées en lignes et en colonnes"""
 
-    def __init__(self,  grid: list[list[RoadTile]], nom: str | None = None):
+    def __init__(self, grid: list[list[RoadTile]], nom: str | None = None):
         """Enregistre la grille, le nom et les informations du circuit"""
         self.grid = grid
         self.rows = len(grid)
         self.cols = len(grid[0]) if grid else 0
-        
-        """Nom du circuit et positions de ses checkpoints et boosts"""
+
+        # nom du circuit et positions de ses checkpoints et boosts
         self.nom = nom
         self.checkpoints = CHECKPOINTS.get(nom, [])
         self.boosts = BOOSTS.get(nom, [])
+        self.checkpoint_bands = CHECKPOINT_BANDS.get(nom, [])
+        self.finish_band = FINISH_BANDS.get(nom, [])
+        self.checkpoint_directions = CHECKPOINT_DIRECTIONS
+        self.finish_direction = FINISH_DIRECTION
 
-        """Position du départ, de l'arrivée et nombre de tours"""
+        # position du départ, de l'arrivée et nombre de tours
         self.depart = (4, 10)
         self.arrivee = (8, 10)
         self.nombre_tours = 3
-    
+
     @classmethod
     def creer(cls, nom: str):
         """Crée le circuit choisi à partir de sa grille: chaque lettre est transformée en une case avec son terrain et ses couleurs"""
@@ -126,4 +150,3 @@ class Circuit:
     def pixel_height(self) -> int:
         """Calcule la hauteur totale du circuit en pixels à partir du nombre de lignes"""
         return self.rows * TILE_SIZE
-
