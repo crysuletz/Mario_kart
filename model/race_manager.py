@@ -7,21 +7,20 @@ class RaceManager:
         self.total_laps = total_laps
         # tours faits par le joueur 1 et le joueur 2
         self.laps = {1: 0, 2: 0}
-        # checkpoints passés pendant le tour en cours
+        # numéros des checkpoints passés pendant le tour en cours
         self.passed_checkpoints = {1: [], 2: []}
         # personne n'a gagné au début
         self.winner = None
 
-    def pass_checkpoint(self, player: int, col: int, row: int) -> None:
-        """retient qu'un joueur est passé sur un checkpoint"""
-        position = (col, row)
-        # on l'ajoute si le joueur est pas déjà passé dessus
-        if position not in self.passed_checkpoints[player]:
-            self.passed_checkpoints[player].append(position)
-    
+    def pass_checkpoint(self, player: int, number: int) -> None:
+        """retient le checkpoint seulement si c'est le suivant dans l'ordre du circuit"""
+        # le prochain checkpoint attendu, c'est le nombre de checkpoints déjà passés + 1
+        prochain = len(self.passed_checkpoints[player]) + 1
+        if number == prochain:
+            self.passed_checkpoints[player].append(number)
+
     def pass_finish_line(self, player: int) -> None:
         """ajoute un tour si tous les checkpoints sont passés et vérifie si le joueur a gagné"""
-        # on compte le tour si le joueur a passe tous les checkpoints
         if len(self.passed_checkpoints[player]) == self.total_checkpoints:
             self.laps[player] = self.laps[player] + 1
             # on vide la liste pour recommencer au tour suivant
